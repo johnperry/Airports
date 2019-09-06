@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/ResultList"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:padding="6dp"
+android:orientation="vertical">
+
+<TextView
+    android:id="@+id/ListID"
+    style="@style/ListID"/>
+
+<TextView
+    android:id="@+id/ListName"
+    style="@style/ListName"/>
+
+<TextView
+    android:id="@+id/ListCityState"
+    style="@style/ListCityState"/>
+
+<TextView
+    android:id="@+id/ListBearing"
+    style="@style/ListBearing"/>
+
+<TextView
+    android:id="@+id/ListDistance"
+    style="@style/ListDistance"/>
+
+</RelativeLayout>

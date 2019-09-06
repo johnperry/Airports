@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Search">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_airports"
+        android:orderInCategory="101"
+        android:title="@string/action_airports"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_seaports"
+        android:orderInCategory="102"
+        android:title="@string/action_seaports"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_vors"
+        android:orderInCategory="103"
+        android:title="@string/action_vors"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_ndbs"
+        android:orderInCategory="104"
+        android:title="@string/action_ndbs"
+        app:showAsAction="never" />
+</menu>

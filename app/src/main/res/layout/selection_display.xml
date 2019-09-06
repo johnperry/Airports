@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_search"
+    android:keepScreenOn="true">
+
+<TextView
+        android:id="@+id/ID"
+        style="@style/ID"/>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_alignParentTop="false"
+        android:fillViewport="true"
+        android:measureAllChildren="false"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ID">
+
+            <TableRow style="@style/DisplayTableRow">
+                 <TextView
+                    style="@style/TableRowLabel"
+                    android:text="@string/NameLabel"/>
+                <TextView
+                    android:id="@+id/Name"
+                    style="@style/TableRowData"/>
+            </TableRow>
+
+            <TableRow style="@style/DisplayTableRow">
+               <TextView
+                    style="@style/TableRowLabel"
+                    android:text="@string/CityLabel"/>
+                <TextView
+                    android:id="@+id/City"
+                    style="@style/TableRowData"/>
+            </TableRow>
+
+            <TableRow style="@style/DisplayTableRow">
+                <TextView
+                    style="@style/TableRowLabel"
+                    android:text="@string/StateLabel"/>
+                <TextView
+                    android:id="@+id/State"
+                    style="@style/TableRowData"/>
+            </TableRow>
+
+            <TableRow style="@style/DisplayTableRow">
+                <TextView
+                    style="@style/TableRowLabel"
+                    android:text="@string/LatLonLabel"/>
+                <TextView
+                    android:id="@+id/LatLon"
+                    style="@style/TableRowData"/>
+            </TableRow>
+
+            <TableRow style="@style/DisplayTableRow"
+                android:id="@+id/ElevRow">
+                <TextView
+                    style="@style/TableRowLabel"
+                    android:text="@string/ElevLabel"/>
+                <TextView
+                    android:id="@+id/Elev"
+                    style="@style/TableRowData"/>
+            </TableRow>
+
+            <TableRow style="@style/DisplayTableRow"
+                android:id="@+id/RunwaysRow">
+                <TextView
+                    style="@style/TableRowLabel"
+                    android:text="@string/RunwayLabel"/>
+                <TextView
+                    android:id="@+id/Runway"
+                    style="@style/TableRowData"/>
+            </TableRow>
+
+            <TableRow style="@style/DisplayTableRow"
+                android:id="@+id/FreqRow">
+                <TextView
+                    style="@style/TableRowLabel"
+                    android:text="@string/FreqLabel"/>
+                <TextView
+                    android:id="@+id/Freq"
+                    style="@style/TableRowData"/>
+            </TableRow>
+
+            <TableRow style="@style/DisplayTableRow"
+                android:id="@+id/DistRow">
+                <TextView
+                    style="@style/TableRowLabel"
+                    android:text="@string/DistLabel"/>
+                <TextView
+                    android:id="@+id/Dist"
+                    style="@style/TableRowData"/>
+            </TableRow>
+
+            <TableRow style="@style/DisplayTableRow"
+                android:id="@+id/TrueBearingRow">
+                <TextView
+                    style="@style/TableRowLabel"
+                    android:text="@string/TrueBearingLabel"/>
+                <TextView
+                    android:id="@+id/TrueBearing"
+                    style="@style/TableRowData"/>
+            </TableRow>
+
+            <TableRow style="@style/DisplayTableRow"
+                android:id="@+id/MagBearingRow">
+                <TextView
+                    style="@style/TableRowLabel"
+                    android:text="@string/MagBearingLabel"/>
+                <TextView
+                    android:id="@+id/MagBearing"
+                    style="@style/TableRowData"/>
+            </TableRow>
+
+            <TableRow style="@style/DisplayTableRow"
+                android:id="@+id/VarRow">
+                <TextView
+                    style="@style/TableRowLabel"
+                    android:text="@string/MagVarLabel"/>
+                <TextView
+                    android:id="@+id/Var"
+                    style="@style/TableRowData"/>
+            </TableRow>
+
+            <TableRow style="@style/DisplayTableRow"
+                android:id="@+id/WMMDecRow">
+                <TextView
+                    style="@style/TableRowLabel"
+                    android:text="@string/WMMDecLabel"/>
+                <TextView
+                    android:id="@+id/WMMDec"
+                    style="@style/TableRowData"/>
+            </TableRow>
+
+            <!--Current location-->
+            <TableRow
+                android:id="@+id/CurrentLocationTitleRow">
+                <TextView
+                    style="@style/CurrentLocationTitle"
+                    android:text="Current Location"/>
+            </TableRow>
+            <TableRow style="@style/DisplayTableRow"
+                android:id="@+id/CurrentLocationLatLonRow">
+                <TextView
+                    style="@style/TableRowLabel"
+                    android:text="@string/CurrentLocationLatLonLabel"/>
+                <TextView
+                    android:id="@+id/CurrentLocationLatLon"
+                    style="@style/TableRowData"/>
+            </TableRow>
+            <TableRow style="@style/DisplayTableRow"
+                android:id="@+id/CurrentLocationWMMDecRow">
+                <TextView
+                    style="@style/TableRowLabel"
+                    android:text="@string/CurrentLocationWMMDecLabel"/>
+                <TextView
+                    android:id="@+id/CurrentLocationWMMDec"
+                    style="@style/TableRowData"/>
+            </TableRow>
+            <TableRow style="@style/DisplayTableRow"
+                android:id="@+id/CurrentLocationAltitudeRow">
+                <TextView
+                    style="@style/TableRowLabel"
+                    android:text="@string/CurrentLocationAltitudeLabel"/>
+                <TextView
+                    android:id="@+id/CurrentLocationAltitude"
+                    style="@style/TableRowData"/>
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:gravity="center">
+        <Button
+            style="@style/MapButton"/>
+        <Button
+            style="@style/EarthButton"/>
+        <Button
+            android:id="@+id/AirNavButton"
+            style="@style/AirNavButton"/>
+    </LinearLayout>
+
+</LinearLayout>

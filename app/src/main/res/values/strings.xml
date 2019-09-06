@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Airports</string>
+    <string name="display_name">Airports</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_airports">Airports</string>
+    <string name="action_seaports">Seaports</string>
+    <string name="action_vors">VORs</string>
+    <string name="action_ndbs">NDBs</string>
+
+    <string name="SearchText">Enter search text</string>
+    <string name="SearchButton">Clear</string>
+    <string name="AirportsFilename">Airports.txt</string>
+    <string name="SeaportsFilename">Seaports.txt</string>
+    <string name="VORsFilename">VORs.txt</string>
+    <string name="NDBsFilename">NDBs.txt</string>
+
+    <string name="NameLabel">Name</string>
+    <string name="CityLabel">City</string>
+    <string name="StateLabel">State</string>
+    <string name="LatLonLabel">Lat/Lon</string>
+    <string name="ElevLabel">Elevation</string>
+    <string name="RunwayLabel">Runway</string>
+    <string name="FreqLabel">Freq</string>
+    <string name="MagVarLabel">Mag Var</string>
+    <string name="WMMDecLabel">WMM Dec</string>
+    <string name="DistLabel">Distance</string>
+    <string name="TrueBearingLabel">Bearing (T)</string>
+    <string name="MagBearingLabel">Bearing (M)</string>
+    <string name="CurrentLocationLatLonLabel">Lat/Lon</string>
+    <string name="CurrentLocationWMMDecLabel">WMM Dec</string>
+    <string name="CurrentLocationAltitudeLabel">WMM Alt</string>
+
+    <string name="MapButton">Show Map</string>
+    <string name="EarthButton">Show Earth</string>
+    <string name="AirNavButton">Show AirNav</string>
+    <string name="freqLabel">Freq</string>
+</resources>
