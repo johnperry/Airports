@@ -36,7 +36,7 @@ public class SelectionDisplay extends AppCompatActivity implements LocationListe
         id = intent.getStringExtra(Search.SELECTIONID);
 
         Database db = Database.getInstance();
-        Station station = db.getStation(id);
+        station = db.getStation(id);
         if (station != null) display(station);
         else Toast.makeText(getApplicationContext(), "Cannot find "+id, Toast.LENGTH_LONG).show();
     }

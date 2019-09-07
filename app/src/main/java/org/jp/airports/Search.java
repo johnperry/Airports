@@ -60,6 +60,7 @@ public class Search extends AppCompatActivity implements LocationListener {
         editText.addTextChangedListener(new SearchTextWatcher());
 
         db.selectDatabase(Database.airportDBID);
+        nearestSearch = true;
         search(location, true);
     }
 
@@ -92,7 +93,7 @@ public class Search extends AppCompatActivity implements LocationListener {
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER,
                 3000,   // 3 sec
-                100, //100 meter minimum change
+                10, //10 meter minimum change
                 this);   //LocationListener
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new NearestListener());
@@ -112,6 +113,7 @@ public class Search extends AppCompatActivity implements LocationListener {
     }
 
     public void onLocationChanged(Location location) {
+        //Toast.makeText(getApplicationContext(), "Location changed (nrst="+nearestSearch+")", Toast.LENGTH_LONG).show();
         if (location != null) {
             this.location = location;
             if (nearestSearch) {
@@ -178,8 +180,9 @@ public class Search extends AppCompatActivity implements LocationListener {
         public NearestListener() { }
         public void onClick(View view) {
             if (location != null) {
-                search(location, true);
                 nearestSearch = true;
+                search(location, true);
+                clearSearchText();
             }
             else {
                 Toast.makeText(getApplicationContext(),
@@ -188,9 +191,13 @@ public class Search extends AppCompatActivity implements LocationListener {
         }
     }
 
-    public void clear(View view) {
+    private void clearSearchText() {
         EditText searchText = (EditText) findViewById(R.id.SearchText);
         searchText.setText("");
+    }
+
+    public void clear(View view) {
+        clearSearchText();
         search(view);
     }
 
@@ -232,7 +239,7 @@ public class Search extends AppCompatActivity implements LocationListener {
 
     private void showResults(LinkedList<Station> list, boolean showToast) {
         if (location != null) {
-            for (Station ap : list) ap.setDistanceFrom(location);
+            for (Station station : list) station.setDistanceFrom(location);
         }
         Collections.sort(list);
         stationAdapter.clear();
