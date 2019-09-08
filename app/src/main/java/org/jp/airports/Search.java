@@ -40,6 +40,7 @@ public class Search extends AppCompatActivity implements LocationListener {
     String lastSearch = "";
     boolean nearestSearch = false;
     LinkedList<Station> list = null;
+    boolean haveLocationServicePermission = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +61,6 @@ public class Search extends AppCompatActivity implements LocationListener {
         editText.addTextChangedListener(new SearchTextWatcher());
 
         db.selectDatabase(Database.airportDBID);
-        nearestSearch = true;
-        search(location, true);
     }
 
     private void setupPermissions() {
@@ -71,7 +70,7 @@ public class Search extends AppCompatActivity implements LocationListener {
                     new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
                     LOCATION_REQUEST_CODE);
         }
-        else initLocService();
+        else haveLocationServicePermission = true;
     }
 
     public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -82,7 +81,7 @@ public class Search extends AppCompatActivity implements LocationListener {
                     Toast.makeText(getApplicationContext(),
                             "Cannot obtain permission for LocationManager", Toast.LENGTH_LONG).show();
                 }
-                else initLocService();
+                else haveLocationServicePermission = true;
             }
         }
     }
@@ -102,6 +101,12 @@ public class Search extends AppCompatActivity implements LocationListener {
     @Override
     protected void onStart() {
         super.onStart();
+        initLocService();
+        if (nearestSearch) search(location, true);
+        else {
+            lastSearch += "x";
+            search();
+        }
     }
 
     @Override
@@ -159,6 +164,8 @@ public class Search extends AppCompatActivity implements LocationListener {
         } else return super.onOptionsItemSelected(item);
 
         listView.setAdapter(stationAdapter);
+        nearestSearch = true;
+        clearSearchText();
         search(location, true);
         return true;
     }
@@ -180,9 +187,9 @@ public class Search extends AppCompatActivity implements LocationListener {
         public NearestListener() { }
         public void onClick(View view) {
             if (location != null) {
+                clearSearchText();
                 nearestSearch = true;
                 search(location, true);
-                clearSearchText();
             }
             else {
                 Toast.makeText(getApplicationContext(),
@@ -198,7 +205,8 @@ public class Search extends AppCompatActivity implements LocationListener {
 
     public void clear(View view) {
         clearSearchText();
-        search(view);
+        lastSearch += "x";
+        search();
     }
 
     class SearchTextWatcher implements TextWatcher {
@@ -206,16 +214,11 @@ public class Search extends AppCompatActivity implements LocationListener {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
         public void afterTextChanged(Editable s) {
             if (s.length() > 1) {
-                search();
                 nearestSearch = false;
+                search();
             }
         }
         public void onTextChanged(CharSequence s, int start, int before, int count) { }
-    }
-
-    public void search(View view) {
-        lastSearch += "x";
-        search();
     }
 
     public void search(Location loc, boolean showToast) {
