@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('D:\\Development\\Android\\Keystore.jks')
+            storePassword 'n32cpcp'
+            keyAlias = 'jp'
+            keyPassword 'n32cpcp'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "org.jp.airports"
