@@ -27,4 +27,9 @@
         android:orderInCategory="104"
         android:title="@string/action_ndbs"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_fixes"
+        android:orderInCategory="105"
+        android:title="@string/action_fixes"
+        app:showAsAction="never" />
 </menu>

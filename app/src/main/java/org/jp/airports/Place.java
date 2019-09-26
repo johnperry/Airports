@@ -8,8 +8,8 @@ import java.util.Calendar;
 /**
  * Created by John on 3/19/2016.
  */
-public class Station implements Comparable<Station> {
-    private static final String TAG = "Station";
+public class Place implements Comparable<Place> {
+    private static final String TAG = "Place";
     public String id;
     public String type = "";
     public String name = "";
@@ -32,10 +32,11 @@ public class Station implements Comparable<Station> {
     public boolean isNDB = false;
     public boolean isPort = false;
     public boolean isNavaid = false;
+    public boolean isFix = false;
 
     private String text;
 
-    public Station(String stationText) {
+    public Place(String stationText) {
         String[] txt = stationText.split("\\|");
         for (int i=0; i<txt.length; i++) {
             switch (i) {
@@ -53,7 +54,11 @@ public class Station implements Comparable<Station> {
                 case 7: this.rwy = txt[7].replaceAll(";","\n"); break;
                 case 8:
                     this.var = txt[8];
-                    try { dvar = Double.parseDouble(this.var); }
+                    try {
+                        String varx = txt[8].substring(txt[8].length() - 1);
+                        dvar = Double.parseDouble(varx);
+                        if (txt[8].endsWith("W")) dvar = -dvar;
+                    }
                     catch (Exception ex) { dvar = 0.0; }
                     break;
                 case 9: this.freq = txt[9].replaceAll(";","\n"); break;
@@ -65,8 +70,10 @@ public class Station implements Comparable<Station> {
         isNDB = type.equals("NDB");
         isPort = isAirport || isSeaport;
         isNavaid = isVOR || isNDB;
+        isFix = type.equals("FIX") || type.equals("MIL");
 
-        text = (id+"|"+name+"|"+city+"|"+state).toLowerCase();
+        if (!isFix) text = (id+"|"+name+"|"+city+"|"+state).toLowerCase();
+        else text = (id+"|"+type+"|"+state).toLowerCase();
     }
 
     public String getID() {
@@ -77,18 +84,18 @@ public class Station implements Comparable<Station> {
         return text.contains(sc);
     }
 
-    public int compareTo(Station station) {
-        if ((dist >= 0.0) && (station.dist >= 0.0)) {
-            if (dist < station.dist) return -1;
-            if (dist > station.dist) return 1;
+    public int compareTo(Place place) {
+        if ((dist >= 0.0) && (place.dist >= 0.0)) {
+            if (dist < place.dist) return -1;
+            if (dist > place.dist) return 1;
         }
-        return id.compareTo(station.id);
+        return id.compareTo(place.id);
     }
 
     public void setDistanceFrom(Location location) {
         dist = getDistanceFrom(location);
         trueBrng = getTrueBearingFrom(location);
-        magBrng = trueBrng + getWMMMagneticDeclination(location);
+        magBrng = trueBrng - getWMMMagneticDeclination(location);
     }
 
     public double getDistanceFrom(Location location) {

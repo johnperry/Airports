@@ -36,7 +36,7 @@
     </style>
 
     <style name="ListID">
-        <item name="android:layout_width">85dp</item>
+        <item name="android:layout_width">95dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:singleLine">true</item>
         <item name="android:textSize">28sp</item>
@@ -44,9 +44,9 @@
     </style>
 
     <style name="ListName">
-        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_toRightOf">@id/ListID</item>
         <item name="android:ellipsize">marquee</item>
         <item name="android:singleLine">true</item>
         <item name="android:textSize">14sp</item>
@@ -55,19 +55,17 @@
     </style>
 
     <style name="ListCityState">
-        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_below">@id/ListName</item>
         <item name="android:ellipsize">marquee</item>
         <item name="android:singleLine">true</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:paddingLeft">85dp</item>
     </style>
 
     <style name="ListBearing">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_toRightOf">@id/ListName</item>
         <item name="android:gravity">right</item>
         <item name="android:ellipsize">marquee</item>
         <item name="android:singleLine">true</item>
@@ -78,7 +76,6 @@
     <style name="ListDistance">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_below">@id/ListBearing</item>
         <item name="android:gravity">right</item>
         <item name="android:ellipsize">marquee</item>
         <item name="android:singleLine">true</item>

@@ -24,8 +24,7 @@ public class SelectionDisplay extends AppCompatActivity implements LocationListe
     String id;
     double lat;
     double lon;
-    Station station = null;
-    boolean isAirport = true;
+    Place place = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,30 +35,33 @@ public class SelectionDisplay extends AppCompatActivity implements LocationListe
         id = intent.getStringExtra(Search.SELECTIONID);
 
         Database db = Database.getInstance();
-        station = db.getStation(id);
-        if (station != null) display(station);
+        place = db.getStation(id);
+        if (place != null) display(place);
         else Toast.makeText(getApplicationContext(), "Cannot find "+id, Toast.LENGTH_LONG).show();
     }
 
-    private void display(Station station) {
-        lat = station.lat;
-        lon = station.lon;
+    private void display(Place place) {
+        lat = place.lat;
+        lon = place.lon;
         String latlon = String.format("(%.3f, %.3f)", lat, lon);
-        String wmmvar = String.format("%.1f", station.getWMMMagneticDeclination());
+        String wmmvar = String.format("%.1f", place.getWMMMagneticDeclination());
 
-        setText(R.id.ID, station.id);
+        setText(R.id.ID, place.id);
         setText(R.id.Name,
-                (station.isNavaid?station.freq+" ":"") + station.name + (station.isNavaid?" "+station.type:""));
-        setText(R.id.City, station.city);
-        setText(R.id.State, station.state);
-        setText(R.id.Elev, station.elev, " ft", R.id.ElevRow);
+                (place.isNavaid ? place.freq + " " : "") + place.name + (place.isNavaid ? " " + place.type : ""),
+                R.id.NameRow);
+
+        setText(R.id.Type, place.type, R.id.TypeRow);
+        setText(R.id.City, place.city, R.id.CityRow);
+        setText(R.id.State, place.state);
+        setText(R.id.Elev, place.elev, " ft", R.id.ElevRow);
         setText(R.id.LatLon, latlon);
-        setText(R.id.Runway, station.rwy, "", R.id.RunwaysRow);
-        setText(R.id.Freq, station.freq, "", R.id.FreqRow);
-        setText(R.id.Var, station.var, "°", R.id.VarRow);
+        setText(R.id.Runway, place.rwy, "", R.id.RunwaysRow);
+        setText(R.id.Freq, place.freq, "", R.id.FreqRow);
+        setText(R.id.Var, place.var, "", R.id.VarRow);
         setText(R.id.WMMDec, wmmvar, "°", R.id.WMMDecRow);
-        displayLocationParams(station.dist, station.trueBrng, station.magBrng);
-        if (station.isNavaid) {
+        displayLocationParams(place.dist, place.trueBrng, place.magBrng);
+        if (place.isNavaid || place.isFix) {
             View airNavButton = (View)findViewById(R.id.AirNavButton);
             airNavButton.setVisibility(View.GONE);
         }
@@ -84,7 +86,7 @@ public class SelectionDisplay extends AppCompatActivity implements LocationListe
                 String.format("(%.3f, %.3f)", location.getLatitude(), location.getLongitude())
                 : null;
         String wmmdec =  (location != null) ?
-                String.format("%.1f", Station.getWMMMagneticDeclination(location))
+                String.format("%.1f", Place.getWMMMagneticDeclination(location))
                 : null;
         String altitude =  (location != null) ?
                 String.format("%.0f", location.getAltitude() * 39.37/12)
@@ -109,6 +111,16 @@ public class SelectionDisplay extends AppCompatActivity implements LocationListe
         }
         else {
             setText(id, text + units);
+            row.setVisibility(View.VISIBLE);
+        }
+    }
+    private void setText(int id, String text, int rowID) {
+        View row = (View)findViewById(rowID);
+        if ((text == null) || text.trim().equals("")) {
+            row.setVisibility(View.GONE);
+        }
+        else {
+            setText(id, text);
             row.setVisibility(View.VISIBLE);
         }
     }
@@ -144,8 +156,8 @@ public class SelectionDisplay extends AppCompatActivity implements LocationListe
     public void onLocationChanged(Location location) {
         if (location != null) {
             this.location = location;
-            station.setDistanceFrom(location);
-            displayLocationParams(station.dist, station.trueBrng, station.magBrng);
+            place.setDistanceFrom(location);
+            displayLocationParams(place.dist, place.trueBrng, place.magBrng);
         }
     }
 

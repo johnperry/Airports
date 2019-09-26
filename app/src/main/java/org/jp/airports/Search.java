@@ -35,11 +35,11 @@ public class Search extends AppCompatActivity implements LocationListener {
     LocationManager locationManager = null;
     Location location = null;
     ListView listView;
-    StationAdapter stationAdapter;
+    PlaceAdapter placeAdapter;
     Toast searchToast = null;
     String lastSearch = "";
     boolean nearestSearch = false;
-    LinkedList<Station> list = null;
+    LinkedList<Place> list = null;
     boolean haveLocationServicePermission = false;
 
     @Override
@@ -52,9 +52,9 @@ public class Search extends AppCompatActivity implements LocationListener {
         setupPermissions();
 
         listView = (ListView) findViewById(R.id.ResultList);
-        stationAdapter = new StationAdapter(this);
+        placeAdapter = new PlaceAdapter(this);
 
-        listView.setAdapter(stationAdapter);
+        listView.setAdapter(placeAdapter);
         listView.setOnItemClickListener(new SearchSelectionListener(this));
 
         EditText editText = (EditText) findViewById(R.id.SearchText);
@@ -161,9 +161,12 @@ public class Search extends AppCompatActivity implements LocationListener {
         } else if (id == R.id.action_ndbs) {
             ab.setTitle(R.string.action_ndbs);
             Database.getInstance().selectDatabase(Database.ndbDBID);
+        } else if (id == R.id.action_fixes) {
+            ab.setTitle(R.string.action_fixes);
+            Database.getInstance().selectDatabase(Database.fixDBID);
         } else return super.onOptionsItemSelected(item);
 
-        listView.setAdapter(stationAdapter);
+        listView.setAdapter(placeAdapter);
         nearestSearch = true;
         clearSearchText();
         search(location, true);
@@ -177,8 +180,8 @@ public class Search extends AppCompatActivity implements LocationListener {
         }
         public void onItemClick(AdapterView<?> av, View view, int position, long id) {
             Intent intent = new Intent(creator, SelectionDisplay.class);
-            Station station = stationAdapter.getItem(position);
-            intent.putExtra(SELECTIONID, station.getID());
+            Place place = placeAdapter.getItem(position);
+            intent.putExtra(SELECTIONID, place.getID());
             startActivity(intent);
         }
     }
@@ -240,17 +243,17 @@ public class Search extends AppCompatActivity implements LocationListener {
         }
     }
 
-    private void showResults(LinkedList<Station> list, boolean showToast) {
+    private void showResults(LinkedList<Place> list, boolean showToast) {
         if (location != null) {
-            for (Station station : list) station.setDistanceFrom(location);
+            for (Place place : list) place.setDistanceFrom(location);
         }
         Collections.sort(list);
-        stationAdapter.clear();
-        stationAdapter.addAll(list);
+        placeAdapter.clear();
+        placeAdapter.addAll(list);
         if (showToast) {
             int n = list.size();
             String result = (n > 0) ?
-                    n + " station" + ((n > 1) ? "s" : "") + " found" :
+                    n + " place" + ((n > 1) ? "s" : "") + " found" :
                     "No matches found";
             Context context = getApplicationContext();
             searchToast = Toast.makeText(context, result, Toast.LENGTH_SHORT);

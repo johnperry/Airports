@@ -16,16 +16,18 @@ import java.util.LinkedList;
 public class Database {
     private static Database instance = null;
     private static final int ndbs = 4;
-    private Hashtable<String, Station> airportDB = new Hashtable<String, Station>();
-    private Hashtable<String, Station> seaportDB = new Hashtable<String, Station>();
-    private Hashtable<String, Station> vorDB = new Hashtable<String, Station>();
-    private Hashtable<String, Station> ndbDB = new Hashtable<String, Station>();
+    private Hashtable<String, Place> airportDB = new Hashtable<String, Place>();
+    private Hashtable<String, Place> seaportDB = new Hashtable<String, Place>();
+    private Hashtable<String, Place> vorDB = new Hashtable<String, Place>();
+    private Hashtable<String, Place> ndbDB = new Hashtable<String, Place>();
+    private Hashtable<String, Place> fixDB = new Hashtable<String, Place>();
     public static final int airportDBID = 0;
     public static final int seaportDBID = 1;
     public static final int vorDBID = 2;
     public static final int ndbDBID = 3;
+    public static final int fixDBID = 4;
     private int currentDBID = airportDBID;
-    private Hashtable<String, Station> currentDB = null;
+    private Hashtable<String, Place> currentDB = null;
 
     public static Database getInstance(Context context) {
         if (instance == null) {
@@ -43,6 +45,7 @@ public class Database {
         load(context, seaportDB, "Seaports.txt");
         load(context, vorDB, "VORs.txt");
         load(context, ndbDB, "NDBs.txt");
+        load(context, fixDB, "Fixes.txt");
     }
 
     public void selectDatabase(int dbid) {
@@ -51,12 +54,13 @@ public class Database {
             case seaportDBID: currentDB = seaportDB; break;
             case vorDBID: currentDB = vorDB; break;
             case ndbDBID: currentDB = ndbDB; break;
+            case fixDBID: currentDB = fixDB; break;
             default: return;
         }
         currentDBID = dbid;
     }
 
-    private void load(Context context, Hashtable<String,Station>table, String filename) {
+    private void load(Context context, Hashtable<String, Place>table, String filename) {
         AssetManager am = context.getAssets();
         BufferedReader br = null;
         try {
@@ -64,8 +68,8 @@ public class Database {
                 br = new BufferedReader(new InputStreamReader(am.open(filename)));
                 String line;
                 while ((line = br.readLine()) != null) {
-                    Station station = new Station(line);
-                    table.put(station.getID(), station);
+                    Place place = new Place(line);
+                    table.put(place.getID(), place);
                 }
             }
             finally {
@@ -79,38 +83,39 @@ public class Database {
     }
 
 
-    public Station getStation(String id) {
+    public Place getStation(String id) {
         return currentDB.get(id);
     }
 
-    public LinkedList<Station> search(String sc) {
+    public LinkedList<Place> search(String sc) {
         sc = sc.toLowerCase();
-        LinkedList<Station> list = new LinkedList<Station>();
-        for (Station station : currentDB.values()) {
-            if (station.matches(sc)) {
-                list.add(station);
+        LinkedList<Place> list = new LinkedList<Place>();
+        for (Place place : currentDB.values()) {
+            if (place.matches(sc)) {
+                list.add(place);
             }
         }
         return list;
     }
 
-    public LinkedList<Station> search(Location location) {
+    public LinkedList<Place> search(Location location) {
         double lat = location.getLatitude();
         double lon = location.getLongitude();
-        double delta = 3.0;
-        LinkedList<Station> list = new LinkedList<Station>();
-        for (Station station : currentDB.values()) {
-            if ( (Math.abs(station.lat - lat) < delta)
-                    && (Math.abs(station.lon - lon) < delta)) {
-                list.add(station);
+        double delta = 2.0;
+        if (currentDB.equals(fixDB)) delta = 1.0;
+        LinkedList<Place> list = new LinkedList<Place>();
+        for (Place place : currentDB.values()) {
+            if ( (Math.abs(place.lat - lat) < delta)
+                    && (Math.abs(place.lon - lon) < delta)) {
+                list.add(place);
             }
         }
         return list;
     }
 
     public double getDistance(String fromID, String toID) {
-        Station fromAP = currentDB.get(fromID);
-        Station toAP = currentDB.get(toID);
+        Place fromAP = currentDB.get(fromID);
+        Place toAP = currentDB.get(toID);
         if ((fromAP != null) && (toAP != null)) {
             V3 fromV3 = new V3(fromAP.lat, fromAP.lon);
             V3 toV3 = new V3(toAP.lat, toAP.lon);

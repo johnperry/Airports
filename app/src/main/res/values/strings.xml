@@ -7,6 +7,7 @@
     <string name="action_seaports">Seaports</string>
     <string name="action_vors">VORs</string>
     <string name="action_ndbs">NDBs</string>
+    <string name="action_fixes">Fixes</string>
 
     <string name="SearchText">Enter search text</string>
     <string name="SearchButton">Clear</string>

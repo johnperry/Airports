@@ -26,8 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/ID">
 
-            <TableRow style="@style/DisplayTableRow">
-                 <TextView
+            <TableRow style="@style/DisplayTableRow"
+                android:id="@+id/NameRow">
+                <TextView
                     style="@style/TableRowLabel"
                     android:text="@string/NameLabel"/>
                 <TextView
@@ -35,8 +36,19 @@
                     style="@style/TableRowData"/>
             </TableRow>
 
-            <TableRow style="@style/DisplayTableRow">
-               <TextView
+            <TableRow style="@style/DisplayTableRow"
+                android:id="@+id/TypeRow">
+                <TextView
+                    style="@style/TableRowLabel"
+                    android:text="Type"/>
+                <TextView
+                    android:id="@+id/Type"
+                    style="@style/TableRowData"/>
+            </TableRow>
+
+            <TableRow style="@style/DisplayTableRow"
+                android:id="@+id/CityRow">
+                <TextView
                     style="@style/TableRowLabel"
                     android:text="@string/CityLabel"/>
                 <TextView
