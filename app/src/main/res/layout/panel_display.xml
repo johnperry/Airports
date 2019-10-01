@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:keepScreenOn="true">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#303030">
+
+        <org.jp.airports.OBS
+            android:id="@+id/OBS1"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:layout_gravity="top|center"
+            android:layout_marginTop="10dp"/>
+
+        <org.jp.airports.OBS
+            android:id="@+id/OBS2"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="10dp"/>
+
+    </FrameLayout>
+
+</LinearLayout>

@@ -198,4 +198,14 @@ public class SelectionDisplay extends AppCompatActivity implements LocationListe
         else Toast.makeText(getApplicationContext(),
                 "The browser is unavailable", Toast.LENGTH_LONG).show();
     }
+
+    public void initOBS1(View view) {
+        PanelDB.getInstance().setObs1Place(place);
+        onBackPressed();
+    }
+
+    public void initOBS2(View view) {
+        PanelDB.getInstance().setObs2Place(place);
+        onBackPressed();
+    }
 }

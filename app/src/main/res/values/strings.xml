@@ -32,8 +32,10 @@
     <string name="CurrentLocationWMMDecLabel">WMM Dec</string>
     <string name="CurrentLocationAltitudeLabel">WMM Alt</string>
 
+    <string name="OBS1Button">1</string>
     <string name="MapButton">Show Map</string>
     <string name="EarthButton">Show Earth</string>
     <string name="AirNavButton">Show AirNav</string>
     <string name="freqLabel">Freq</string>
+    <string name="OBS2Button">2</string>
 </resources>

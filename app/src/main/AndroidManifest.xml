@@ -23,9 +23,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".SelectionDisplay"
             android:label="@string/display_name"
+            android:parentActivityName=".Search"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Search" />
+        </activity>
+
+        <activity
+            android:name=".OBSPanel"
+            android:label="OBS"
             android:parentActivityName=".Search"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">

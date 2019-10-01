@@ -201,12 +201,16 @@
         android:paddingTop="10dp"
         android:gravity="center">
         <Button
+            style="@style/OBS1Button"/>
+        <Button
             style="@style/MapButton"/>
         <Button
             style="@style/EarthButton"/>
         <Button
             android:id="@+id/AirNavButton"
             style="@style/AirNavButton"/>
+        <Button
+            style="@style/OBS2Button"/>
     </LinearLayout>
 
 </LinearLayout>

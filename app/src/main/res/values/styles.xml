@@ -142,6 +142,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="OBS1Button">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/OBS1Button</item>
+        <item name="android:onClick">initOBS1</item>
+    </style>
+
     <style name="MapButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -163,4 +170,10 @@
         <item name="android:onClick">startBrowser</item>
     </style>
 
+    <style name="OBS2Button">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">@string/OBS2Button</item>
+        <item name="android:onClick">initOBS2</item>
+    </style>
 </resources>

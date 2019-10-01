@@ -7,7 +7,8 @@ import android.location.Location;
  */
 public class V3 {
     double x, y, z;
-    static V3 pole = new V3(0.0, 0.0, 1.0);
+    static final V3 pole = new V3(0.0, 0.0, 1.0);
+    public static final double dpr = 180.0 / Math.PI;
     public V3(double x, double y, double z) {
         this.x = x;
         this.y = y;
@@ -17,13 +18,13 @@ public class V3 {
         this(location.getLatitude(), location.getLongitude());
     }
     public V3(double lat, double lon) {
-        lat = lat * Math.PI / 180.0;
-        lon = lon * Math.PI / 180.0;
+        lat /= dpr;
+        lon /= dpr;
         z = Math.sin(lat);
         x = Math.cos(lat) * Math.cos(lon);
         y = Math.cos(lat) * Math.sin(lon);
     }
-    public V3 normalize() {
+    public V3 unit() {
         double len = length();
         if (len > 0.0) return scale(1.0/length());
         else return new V3(0.0, 0.0, 0.0);
@@ -44,11 +45,14 @@ public class V3 {
                 x * v.y - y * v.x );
     }
     public double bearingTo(V3 dest) {
-        V3 course = this.cross(dest).cross(this).normalize();
-        V3 north = this.cross(pole).cross(this).normalize();
+        V3 course = this.cross(dest).cross(this).unit();
+        V3 north = this.cross(pole).cross(this).unit();
         V3 east = north.cross(this);
         double theta = Math.acos(course.dot(north));
         if (course.dot(east) < 0) theta = 2 * Math.PI - theta;
-        return theta * 180.0 / Math.PI;
+        return theta * dpr;
+    }
+    public double angle(V3 v) {
+        return Math.acos(this.unit().dot(v.unit())) * dpr;
     }
 }

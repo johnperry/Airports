@@ -164,6 +164,10 @@ public class Search extends AppCompatActivity implements LocationListener {
         } else if (id == R.id.action_fixes) {
             ab.setTitle(R.string.action_fixes);
             Database.getInstance().selectDatabase(Database.fixDBID);
+        } else if (id == R.id.action_obs) {
+            Intent intent = new Intent(getApplicationContext(), OBSPanel.class);
+            startActivity(intent);
+            return true;
         } else return super.onOptionsItemSelected(item);
 
         listView.setAdapter(placeAdapter);
