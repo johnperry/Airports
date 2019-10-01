@@ -109,6 +109,7 @@ public class OBS extends View implements View.OnTouchListener {
         tick5 = 0.05f * cr;
         innerOffset = ascent + tick10 + 20;
 
+        drawInstrumentOutline(canvas);
         canvas.drawCircle(cx, cy, cr, circlePaint);
         for (int i=0; i<360; i++) {
             int degrees = (360 + i - radial) % 360;
@@ -172,18 +173,32 @@ public class OBS extends View implements View.OnTouchListener {
             tpw = typePaint.measureText(dist);
             canvas.drawText(dist, cx - tpw - dx, cy + 2*dx - tpa, typePaint);
 
-            float nw = needlePaint.getStrokeWidth()/2;
-            if (toFrom && (ang >= -10) && (ang <= 10)) {
-                float x = cx+((float)ang)*dx/2 - nw;
-                canvas.drawLine(x,cy+4*dx, x, cy-4*dx, needlePaint);
-            }
-            else if (!toFrom && ((ang <= -170) || (ang >= 170))) {
+            needlePaint.setColor(Color.MAGENTA);
+            float x = 0;
+            if (!toFrom) {
                 ang -= 180 * Math.signum(ang);
                 ang *= -1;
-                float x = cx+((float)ang)*dx/2 - nw;
-                canvas.drawLine(x,cy+4*dx, x, cy-4*dx, needlePaint);
             }
+            if ((ang >= -10) && (ang <= 10)) {
+                x = cx + ((float)ang)*dx/2;
+            }
+            else if (ang <= -10) {
+                x = cx - 10*dx/2;
+                needlePaint.setColor(Color.WHITE);
+            }
+            else if (ang > 10) {
+                x = cx + 10*dx/2;
+                needlePaint.setColor(Color.WHITE);
+            }
+            float nr = cr - innerOffset -60;
+            float nh = (float)Math.sqrt( nr*nr - (x-cx)*(x-cx) );
+            canvas.drawLine(x,cy+nh, x, cy-nh, needlePaint);
         }
+
+        float instRadius = 100;
+        float dxy = (float)((cr + instRadius*3/4)/Math.sqrt(2));
+        drawIncKnob(canvas, -dxy, dxy, instRadius, "-");
+        drawIncKnob(canvas, dxy, dxy, instRadius, "+");
     }
 
     private void drawPointer(Canvas canvas, float x, float y, float h, float w, Paint paint) {
@@ -197,8 +212,32 @@ public class OBS extends View implements View.OnTouchListener {
         canvas.drawPath(path, paint);
     }
 
-    private void drawIncKnob(Canvas canvas, float x, float y, float r) {
+    private void drawIncKnob(Canvas canvas, float x, float y, float r, String s) {
+        canvas.drawCircle(cx + x, cy + y, r, circlePaint);
+        canvas.drawCircle(cx + x, cy + y, r, grayPaint);
+        canvas.drawCircle(cx + x, cy + y, r * 0.8f, ringPaint);
+        float sw = numberPaint.measureText(s);
+        float sa = -numberPaint.ascent();
+        canvas.drawText(s, cx + x - sw/2, cy + y + sa/3, numberPaint);
+    }
 
+    private void drawInstrumentOutline(Canvas canvas) {
+        float dx = 0.15f * w;
+        float dy = 0.15f * h;
+        float xm = 0.05f * w;
+        Path path = new Path();
+        path.moveTo(xm, dy);
+        path.lineTo(dx, 0);
+        path.lineTo(w - dx - xm, 0);
+        path.lineTo(w - xm, dy);
+        path.lineTo(w - xm, h - dy);
+        path.lineTo(w - dx - xm, h);
+        path.lineTo(dx, h);
+        path.lineTo(xm, h - dy);
+        path.lineTo(xm, dy);
+        Paint p = new Paint();
+        p.setColor(Color.LTGRAY);
+        canvas.drawPath(path, p);
     }
 
     public boolean onTouch(View v, MotionEvent event) {

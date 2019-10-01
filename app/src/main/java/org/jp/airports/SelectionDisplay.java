@@ -200,12 +200,16 @@ public class SelectionDisplay extends AppCompatActivity implements LocationListe
     }
 
     public void initOBS1(View view) {
-        PanelDB.getInstance().setObs1Place(place);
+        PanelDB db = PanelDB.getInstance();
+        db.setObs1Place(place);
+        db.setObs1Radial((int)Math.round(place.magBrng));
         onBackPressed();
     }
 
     public void initOBS2(View view) {
-        PanelDB.getInstance().setObs2Place(place);
+        PanelDB db = PanelDB.getInstance();
+        db.setObs2Place(place);
+        db.setObs2Radial((int)Math.round(place.magBrng));;
         onBackPressed();
     }
 }
