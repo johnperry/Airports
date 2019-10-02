@@ -39,7 +39,7 @@
             android:name=".OBSPanel"
             android:label="OBS"
             android:parentActivityName=".Search"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.OBS"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
