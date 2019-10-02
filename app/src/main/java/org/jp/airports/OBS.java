@@ -227,12 +227,12 @@ public class OBS extends View implements View.OnTouchListener {
         float xm = 0.05f * w;
         Path path = new Path();
         path.moveTo(xm, dy);
-        path.lineTo(dx, 0);
+        path.lineTo(xm + dx, 0);
         path.lineTo(w - dx - xm, 0);
         path.lineTo(w - xm, dy);
         path.lineTo(w - xm, h - dy);
         path.lineTo(w - dx - xm, h);
-        path.lineTo(dx, h);
+        path.lineTo(xm + dx, h);
         path.lineTo(xm, h - dy);
         path.lineTo(xm, dy);
         Paint p = new Paint();
