@@ -174,7 +174,10 @@ public class OBS extends View implements View.OnTouchListener {
             canvas.drawText(place.type, cx - tpw - dx, cy - dx  + tpa, typePaint);
             String dist = String.format("%.1fnm",place.dist);
             tpw = typePaint.measureText(dist);
-            canvas.drawText(dist, cx - tpw - dx, cy + 2*dx - tpa, typePaint);
+            canvas.drawText(dist, cx - tpw - dx, cy + 2*dx - 0.9f*tpa, typePaint);
+            String altString = String.format("%.0fft",location.getAltitude()*39.37/12);
+            tpw = typePaint.measureText(altString);
+            canvas.drawText(altString, cx - tpw - dx, cy + 2*dx - 2f*tpa, typePaint);
 
             needlePaint.setColor(Color.MAGENTA);
             float x = 0;
@@ -220,9 +223,9 @@ public class OBS extends View implements View.OnTouchListener {
 
         float instRadius = 100;
         float dxy = (float)((cr + instRadius*3/4)/Math.sqrt(2));
-        drawKnob(canvas, dxy, -dxy, instRadius, "  GS");
-        drawKnob(canvas, dxy, dxy, instRadius, "+");
-        drawKnob(canvas, -dxy, dxy, instRadius, "-");
+        drawKnob(canvas, dxy, -dxy, instRadius, "  GS", (enableGlideSlope?0:Color.RED));
+        drawKnob(canvas, dxy, dxy, instRadius, "+", 0);
+        drawKnob(canvas, -dxy, dxy, instRadius, "-", 0);
     }
 
     private void drawPointer(Canvas canvas, float x, float y, float h, float w, Paint paint) {
@@ -236,7 +239,7 @@ public class OBS extends View implements View.OnTouchListener {
         canvas.drawPath(path, paint);
     }
 
-    private void drawKnob(Canvas canvas, float x, float y, float r, String s) {
+    private void drawKnob(Canvas canvas, float x, float y, float r, String s, int color) {
         canvas.drawCircle(cx + x, cy + y, r, circlePaint);
         canvas.drawCircle(cx + x, cy + y, r * 0.8f, ringPaint);
         TextPaint p = new TextPaint(numberPaint);
@@ -245,6 +248,7 @@ public class OBS extends View implements View.OnTouchListener {
         float sa = -numberPaint.ascent();
         if (s.length() == 1) sa = sa/3f;
         else sa = sa/4f;
+        if (color != 0) p.setColor(color);
         canvas.drawText(s, cx + x - sw/2, cy + y + sa, p);
     }
 
