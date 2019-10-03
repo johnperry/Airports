@@ -25,6 +25,7 @@ public class Place implements Comparable<Place> {
     public double dist = 0.0;
     public double trueBrng = 0.0;
     public double magBrng = 0.0;
+    public double elevation = 0.0;
 
     public boolean isAirport = false;
     public boolean isSeaport = false;
@@ -50,7 +51,11 @@ public class Place implements Comparable<Place> {
                     this.lat = Double.parseDouble(latlon[0]);
                     this.lon = Double.parseDouble(latlon[1]);
                     break;
-                case 6: this.elev = txt[6]; break;
+                case 6:
+                    this.elev = txt[6];
+                    try { elevation = Double.parseDouble(elev); }
+                    catch (Exception ex) { }
+                    break;
                 case 7: this.rwy = txt[7].replaceAll(";","\n"); break;
                 case 8:
                     this.var = txt[8];

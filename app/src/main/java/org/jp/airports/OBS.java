@@ -9,7 +9,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Typeface;
 import android.location.Location;
 import android.text.TextPaint;
 import android.util.AttributeSet;
@@ -26,6 +25,7 @@ public class OBS extends View implements View.OnTouchListener {
     int radial = 0;
     Place place = null;
     Location location = null;
+    boolean enableGlideSlope = true;
 
     public String msg = "";
     
@@ -74,10 +74,12 @@ public class OBS extends View implements View.OnTouchListener {
 
     public void setPlace(Place place) {
         this.place = place;
+        invalidate();
     }
 
     public void setRadial(int radial) {
         this.radial = radial;
+        invalidate();
     }
 
     public int getRadial() {
@@ -88,6 +90,7 @@ public class OBS extends View implements View.OnTouchListener {
         this.location = location;
         if ((place != null) && (location != null)) {
             place.setDistanceFrom(location);
+            invalidate();
         }
     }
 
@@ -190,15 +193,36 @@ public class OBS extends View implements View.OnTouchListener {
                 x = cx + 10*dx/2;
                 needlePaint.setColor(Color.WHITE);
             }
-            float nr = cr - innerOffset -60;
+            float nr = cr - innerOffset - 60;
             float nh = (float)Math.sqrt( nr*nr - (x-cx)*(x-cx) );
             canvas.drawLine(x,cy+nh, x, cy-nh, needlePaint);
+
+            if (!place.isFix && enableGlideSlope && toFrom && (place.dist > 0.1) && (place.dist < 25)) {
+                needlePaint.setColor(Color.MAGENTA);
+                double alt = location.getAltitude() * 39.37/12;
+                double alpha = (alt - place.elevation) / (place.dist * 6076);
+                alpha *= 180 / Math.PI;
+                alpha -= 3;
+                if (alpha > 3) {
+                    alpha = 3;
+                    needlePaint.setColor(Color.WHITE);
+                }
+                else if (alpha < -3) {
+                    alpha = -3;
+                    needlePaint.setColor(Color.WHITE);
+                }
+                alpha *= 5d/3d;
+                float y = cy + (float)(alpha*dx);
+                nh = (float)Math.sqrt( nr*nr - (y-cy)*(y-cy) );
+                canvas.drawLine(cx-nh, y, cx+nh, y, needlePaint);
+            }
         }
 
         float instRadius = 100;
         float dxy = (float)((cr + instRadius*3/4)/Math.sqrt(2));
-        drawIncKnob(canvas, -dxy, dxy, instRadius, "-");
-        drawIncKnob(canvas, dxy, dxy, instRadius, "+");
+        drawKnob(canvas, dxy, -dxy, instRadius, "  GS");
+        drawKnob(canvas, dxy, dxy, instRadius, "+");
+        drawKnob(canvas, -dxy, dxy, instRadius, "-");
     }
 
     private void drawPointer(Canvas canvas, float x, float y, float h, float w, Paint paint) {
@@ -212,13 +236,16 @@ public class OBS extends View implements View.OnTouchListener {
         canvas.drawPath(path, paint);
     }
 
-    private void drawIncKnob(Canvas canvas, float x, float y, float r, String s) {
+    private void drawKnob(Canvas canvas, float x, float y, float r, String s) {
         canvas.drawCircle(cx + x, cy + y, r, circlePaint);
-        canvas.drawCircle(cx + x, cy + y, r, grayPaint);
         canvas.drawCircle(cx + x, cy + y, r * 0.8f, ringPaint);
+        TextPaint p = new TextPaint(numberPaint);
+        if (s.length() > 1) p.setTextSize(72);
         float sw = numberPaint.measureText(s);
         float sa = -numberPaint.ascent();
-        canvas.drawText(s, cx + x - sw/2, cy + y + sa/3, numberPaint);
+        if (s.length() == 1) sa = sa/3f;
+        else sa = sa/4f;
+        canvas.drawText(s, cx + x - sw/2, cy + y + sa, p);
     }
 
     private void drawInstrumentOutline(Canvas canvas) {
@@ -252,6 +279,9 @@ public class OBS extends View implements View.OnTouchListener {
                 else if ((r > cr) && (y > 0)) {
                     if (x > 0) radial++;
                     else radial--;
+                }
+                else if ((r > cr) && (y < 0) && (x > 0)) {
+                    enableGlideSlope = !enableGlideSlope;
                 }
                 else if ((x > 0) && (location != null) && (place != null)) {
                     int magBrng = (int) Math.round(place.magBrng);
