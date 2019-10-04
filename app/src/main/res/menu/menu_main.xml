@@ -8,33 +8,38 @@
         android:title="@string/action_settings"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_airports"
+        android:id="@+id/action_version"
         android:orderInCategory="101"
+        android:title="@string/action_version"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_airports"
+        android:orderInCategory="102"
         android:title="@string/action_airports"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_seaports"
-        android:orderInCategory="102"
+        android:orderInCategory="103"
         android:title="@string/action_seaports"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_vors"
-        android:orderInCategory="103"
+        android:orderInCategory="104"
         android:title="@string/action_vors"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_ndbs"
-        android:orderInCategory="104"
+        android:orderInCategory="105"
         android:title="@string/action_ndbs"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_fixes"
-        android:orderInCategory="105"
+        android:orderInCategory="106"
         android:title="@string/action_fixes"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_obs"
-        android:orderInCategory="106"
+        android:orderInCategory="107"
         android:title="OBS"
         app:showAsAction="never" />
 </menu>

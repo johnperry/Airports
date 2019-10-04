@@ -28,6 +28,7 @@ public class Database {
     public static final int fixDBID = 4;
     private int currentDBID = airportDBID;
     private Hashtable<String, Place> currentDB = null;
+    private String version = "";
 
     public static Database getInstance(Context context) {
         if (instance == null) {
@@ -46,6 +47,11 @@ public class Database {
         load(context, vorDB, "VORs.txt");
         load(context, ndbDB, "NDBs.txt");
         load(context, fixDB, "Fixes.txt");
+        version = getText(context, "Version.txt").trim();
+    }
+
+    public String getVersion() {
+        return version;
     }
 
     public void selectDatabase(int dbid) {
@@ -64,21 +70,43 @@ public class Database {
         AssetManager am = context.getAssets();
         BufferedReader br = null;
         try {
-            try {
-                br = new BufferedReader(new InputStreamReader(am.open(filename)));
-                String line;
-                while ((line = br.readLine()) != null) {
-                    Place place = new Place(line);
-                    table.put(place.getID(), place);
-                }
-            }
-            finally {
-                if (br != null) br.close();
+            br = new BufferedReader(new InputStreamReader(am.open(filename)));
+            String line;
+            while ((line = br.readLine()) != null) {
+                Place place = new Place(line);
+                table.put(place.getID(), place);
             }
         }
         catch (Exception ex) {
             Toast toast = Toast.makeText(context, "Unable to load the "+filename+" database", Toast.LENGTH_LONG);
             toast.show();
+        }
+        finally {
+            try { if (br != null) br.close(); }
+            catch (Exception ignore) { }
+        }
+    }
+
+    private String getText(Context context, String filename) {
+        AssetManager am = context.getAssets();
+        BufferedReader br = null;
+        StringBuffer sb = new StringBuffer();
+        try {
+            br = new BufferedReader(new InputStreamReader(am.open(filename)));
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            return sb.toString();
+        }
+        catch (Exception ex) {
+            Toast toast = Toast.makeText(context, "Unable to read "+filename, Toast.LENGTH_LONG);
+            toast.show();
+            return null;
+        }
+        finally {
+            try { if (br != null) br.close(); }
+            catch (Exception ignore) { }
         }
     }
 
