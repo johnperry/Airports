@@ -35,6 +35,8 @@ public class V3 {
     public double length() {
         return Math.sqrt(dot(this));
     }
+    public V3 plus(V3 v) { return new V3(x+v.x, y+v.y, z+v.z); }
+    public V3 minus(V3 v) { return new V3(x-v.x, y-v.y, z-v.z); }
     public double dot(V3 v) {
         return x * v.x + y * v.y + z * v.z;
     }

@@ -5,15 +5,15 @@
 package org.jp.airports;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.location.Location;
-import android.text.TextPaint;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.View;
+        import android.graphics.Canvas;
+        import android.graphics.Color;
+        import android.graphics.Paint;
+        import android.graphics.Path;
+        import android.location.Location;
+        import android.text.TextPaint;
+        import android.util.AttributeSet;
+        import android.view.MotionEvent;
+        import android.view.View;
 
 public class OBS extends View implements View.OnTouchListener {
     Context context;
@@ -28,7 +28,7 @@ public class OBS extends View implements View.OnTouchListener {
     boolean enableGlideSlope = true;
 
     public String msg = "";
-    
+
     public OBS(Context c, AttributeSet attrs) {
         super(c, attrs);
         context = c;

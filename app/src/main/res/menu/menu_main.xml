@@ -40,6 +40,11 @@
     <item
         android:id="@+id/action_obs"
         android:orderInCategory="107"
-        android:title="OBS"
+        android:title="@string/obs"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_wind"
+        android:orderInCategory="107"
+        android:title="@string/wind"
         app:showAsAction="never" />
 </menu>

@@ -46,5 +46,16 @@
                 android:value=".Search" />
         </activity>
 
+        <activity
+            android:name=".WindPanel"
+            android:label="OBS"
+            android:parentActivityName=".Search"
+            android:theme="@style/AppTheme.OBS"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Search" />
+        </activity>
+
     </application>
 </manifest>

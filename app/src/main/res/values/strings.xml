@@ -39,4 +39,6 @@
     <string name="freqLabel">Freq</string>
     <string name="OBS2Button">2</string>
     <string name="action_version">Version</string>
+    <string name="obs">OBS</string>
+    <string name="wind">Wind</string>
 </resources>

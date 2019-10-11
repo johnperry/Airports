@@ -8,6 +8,8 @@ public class PanelDB {
     Place obs2Place = null;
     int obs1Radial = 0;
     int obs2Radial = 0;
+    float heading = 0;
+    float speed = 0;
 
     public static PanelDB getInstance() {
         if (db == null) db = new PanelDB();
@@ -47,4 +49,17 @@ public class PanelDB {
     public int getObs2Radial() {
         return obs2Radial;
     }
+
+    public void setHeading(float heading) { this.heading = heading; }
+
+    public float getHeading() {
+        return heading;
+    }
+
+    public void setSpeed(float heading) { this.speed = speed; }
+
+    public float getSpeed() {
+        return speed;
+    }
+
 }

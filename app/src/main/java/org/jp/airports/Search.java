@@ -174,6 +174,10 @@ public class Search extends AppCompatActivity implements LocationListener {
             Intent intent = new Intent(getApplicationContext(), OBSPanel.class);
             startActivity(intent);
             return true;
+        } else if (id == R.id.action_wind) {
+            Intent intent = new Intent(getApplicationContext(), WindPanel.class);
+            startActivity(intent);
+            return true;
         } else return super.onOptionsItemSelected(item);
 
         listView.setAdapter(placeAdapter);
